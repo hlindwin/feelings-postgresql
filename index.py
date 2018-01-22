@@ -53,17 +53,22 @@ def index():
 
 
 #if on c9: 
-DATABASE = 'test.sqlite'  # this didn't work to get the command to work , app.logger.info("Database on: %s", app.config['DATABASE'])
-if __name__ == "__main__":
-    app.debug = True
-    
-    host = os.environ.get('IP', '0.0.0.0')
-    port = int(os.environ.get('PORT', 8080))
-    app.logger.info("Starting flask app on %s:%s", host, port)
+#DATABASE = 'test.sqlite'  # this didn't work to get the command to work , app.logger.info("Database on: %s", app.config['DATABASE'])
+#if __name__ == "__main__":
+#    app.debug = True
+#    
+#    host = os.environ.get('IP', '0.0.0.0')
+#    port = int(os.environ.get('PORT', 8080))
+#    app.logger.info("Starting flask app on %s:%s", host, port)
    # app.logger.info("Database on: %s", app.config['DATABASE'])
     
-    app.run(host=host, port=port)
+#    app.run(host=host, port=port)
 
+#  heroku
+if __name__ == '__main__':
+    app.debug = True
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
 
 
 
