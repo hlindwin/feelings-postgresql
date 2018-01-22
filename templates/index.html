@@ -1,0 +1,45 @@
+<!doctype html>
+
+<html lang="en">
+  <head>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class="container-fluid">
+    <h1> How are you? </h1>
+    <form method="Post" action="/"> <!-- action="/send" means to route to the
+        send.html page -->
+      <div class="form-group">
+        <input type="text" name="feeling">
+      </div>
+      <input class="bin bin-primary" type="submit" value="submit">
+    </form
+    <div class="container-fluid">
+      {% if allfeelings != '' %}
+      <h3> Here is what you said: </h3>
+        {{ feeling }}
+      <h3> Here what your friends said:</h3>
+      <ul>
+        <!-- seeing what is in the list {{ allfeelings }}  -->
+        {% for a in allfeelings %}
+          <li> {{ a[0] }} </li>
+          {% endfor %}
+      </ul>
+        {% endif %}
+    </div>
+
+    <div class= 'container-fluid'>
+    {% if text != {} %}
+    <br>
+      <h4>Instructions</h4>
+    {% endif %}
+
+    <ol>
+      {% for k, v in text.items() %}
+        <li> {{ v }} </li>
+      {% endfor %}
+    </ol>
+    </div>
+  </div>
+  </body>
+</html>
