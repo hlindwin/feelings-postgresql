@@ -14,7 +14,7 @@
       </div>
       <input class="bin bin-primary" type="submit" value="submit">
     </form
-
+    <div class="container-fluid">
       {% if allfeelings != '' %}
       <h3> Here is what you said: </h3>
         {{ feeling }}
@@ -26,8 +26,9 @@
           {% endfor %}
       </ul>
         {% endif %}
+    </div>
 
-
+    <div class= 'container-fluid'>
     {% if text != {} %}
     <br>
       <h4>Instructions</h4>
@@ -38,7 +39,7 @@
         <li> {{ v }} </li>
       {% endfor %}
     </ol>
-
+    </div>
   </div>
   </body>
 </html>
