@@ -1,10 +1,23 @@
 from flask import Flask, render_template, request
 import sqlite3, os
+
+from models import db, Feelings
+from forms import FeelingsForm
+
 app = Flask(__name__)
 
-#conn = sqlite3.connect(":memory:", check_same_thread = False)
-conn = sqlite3.connect('test.sqlite')
-cur = conn.cursor()
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///learningflask'
+db.init_app(app)
+
+
+# for wtforms 
+app.secret_key = "development-key"
+
+
+#doing it with sqlite
+##conn = sqlite3.connect(":memory:", check_same_thread = False)
+#conn = sqlite3.connect('test.sqlite')
+#cur = conn.cursor()
 
 
 # Make some fresh tables using executescript()
@@ -17,34 +30,33 @@ CREATE TABLE IF NOT EXISTS feeling (
     Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 '''
-cur.executescript(createtable)
+#cur.executescript(createtable)
+
 
 @app.route('/', methods=['GET','POST'])
-def index():
-    #return 'Hello, World!'  # This return is what the person sees
-    # you can put css in the quotes
-    text = {'input':'Hello, this page cares how you are feeling'
-            ,'input2':'Please tell me how you are feeling'
-            ,'input3':'I really want to know'}
+def feelsubmit():
+    form = FeelingsForm()
+
     if request.method == "POST":
-        feeling = request.form['feeling'] # this is the name of the field in the form.
-        text ={}
-        conn = sqlite3.connect('test.sqlite')
-        cur = conn.cursor()
-        try:
-            cur.execute('''INSERT
-            --  OR IGNORE
-            INTO feeling (feelings )  --if two, add ', field2' and (? , ?)
-                VALUES ( ?  )''', ( feeling,  ) )  # and (field1, field2, ...)
-        except:
-            pass
-        conn.commit()
-        cur.execute(""" Select feelings from feeling limit 1000 """)
-        allfeelings = cur.fetchall()
-        return render_template("index.html", feeling =feeling, text = text, allfeelings = allfeelings)
-            # because the index.html has two variabls (feeling and text),
-            # I have to pass both variables
-    return render_template("index.html",text=text,allfeelings = '')
+        if form.validate() == False:
+            return render_template('index.html', form=form)
+        else:
+          newfeeling= Feelings(form.feeling.data)
+          db.session.add(newfeeling)
+          db.session.commit()
+          
+          print(form.feeling.data)
+          newfeelingtext = form.feeling.data
+          #for a in newfeeling:
+          #    print(a)   -- new feelings is not iterable
+          a = Feelings.query.all()   #.order_by(Feelings.timestamp).
+          print(a)
+            
+          
+          return render_template('index.html', form=form, newfeelingtext=newfeelingtext, allfeelings = a)
+        
+    elif request.method == "GET":
+        return render_template('index.html', form=form, newfeelingtext='')
 
 
 # if not in c9
@@ -89,5 +101,5 @@ for k, v in knights.items():
     print(k, v)
 
 #cur.execute(""" Select rowid, name, url from Artist order by name limit 10 """)
-cur.execute(""" Select * from feeling limit 10 """)
-print(cur.fetchall())
+#cur.execute(""" Select * from feeling limit 10 """)
+#print(cur.fetchall())
