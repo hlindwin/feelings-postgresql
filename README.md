@@ -1,6 +1,7 @@
 
 
-learningflask
+learningflask this time with postgres, wtforms, sqlalchemy, gunicorn, heroku and postgres (have to set up postgres on heroku)
+This app sits here: https://fast-cove-10173.herokuapp.com/
 
 for postgresql
 https://community.c9.io/t/setting-up-postgresql/1573
