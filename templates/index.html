@@ -9,7 +9,7 @@
         {{ form.hidden_tag() }}
 
         <div class="form-group">
-          {{ form.feeling.label }}
+          <!-- {{ form.feeling.label }}-->
 
           {% if form.feeling.errors %}
             {% for error in form.feeling.errors %}
@@ -28,8 +28,8 @@
        {% if newfeelingtext != '' %}
       <h3> Here is what you said: {{ newfeelingtext }} </h3>
       
-      
-      <h3> Here what your friends said:</h3>
+      <p></p>
+      <h3> Here's what other people said:</h3>
       <ul>
         <!-- seeing what is in the list {{ allfeelings }}  -->
         {% for a in allfeelings %}

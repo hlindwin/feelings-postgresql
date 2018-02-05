@@ -80,3 +80,7 @@ def index():
             # because the index.html has two variabls (feeling and text),
             # I have to pass both variables
     return render_template("index.html",text=text,allfeelings = '')
+    
+    
+for heroku:
+https://devcenter.heroku.com/articles/heroku-postgresql
