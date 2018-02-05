@@ -5,8 +5,12 @@ from models import db, Feelings
 from forms import FeelingsForm
 
 app = Flask(__name__)
-
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///learningflask'
+try:
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL'] #'postgresql:///learningflask'
+except:
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///learningflask'  # this works on c9
+    #app.config['SQLALCHEMY_DATABASE_URI'] = 
+    #db = SQLAlchemy(app)  # I mgiht need this
 db.init_app(app)
 
 
